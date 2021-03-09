@@ -1,11 +1,13 @@
 import sys, os
-
-sys.path.append(os.path.dirname(os.path.abspath(__file__)) + os.sep + '../..')
+sys.path.append(os.path.dirname(os.path.abspath(__file__)) + os.sep + '..' + os.sep + '..')
+print(os.path.dirname(os.path.abspath(__file__)) + os.sep + '..')
 from flask import request
-from flask_restplus import Resource
+# from flask_restplus import Resource
 # import util
-from util import dto
-from service.user_service import update_user, insert_user
+# from util import *
+# import util.dto
+from main.util.dto import UserDto
+from main.service.user_service import update_user, insert_user
 
 api = UserDto.api
 _user = UserDto.user
