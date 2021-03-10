@@ -7,6 +7,8 @@ from main import create_app
 from app import blueprint
 import main.model
 from app.main.model import user
+from main.model.user import Subscription
+
 from main import create_app, db
 
 app = create_app(os.getenv('BOILERPLATE_ENV') or 'dev')

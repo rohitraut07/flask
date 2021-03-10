@@ -19,35 +19,41 @@ def subscribe_user(data):
             3. return info of email if exist in Database
     """
     user = Subscription.query.filter_by(email=data['email']).first()
-    print("asdas",user)
     if not user:
         user = Subscription(data['email'])
         db.session.add(user)
         db.session.commit()
         # app.logger.info('%s : successfully subscribed', user.email)
-        response_object = {
-            'state': "201",
-            'change': 'true',
-            'new': 'true',
-            'details': {
-                'message': 'User added to database'
-            }
-        }
-        return response_object, 201
-    else:
-        # app.logger.info('%s : User already exist', user.email)
-        return { 'user': {
+        status =  201
+        change = True
+        new = True
+        message = 'user added to database'
+        user = {
                 'id': user.id,
                 'mail': user.email,
                 'timeStamp': user.timestamp,
                 'subscribed': user.subscription
-            },
-            'status': 409,
-            'change': False,
-            'new': False,
-        }, 409 
-
-
+                }
+    else:
+        # app.logger.info('%s : User already exist', user.email)
+        status = 200
+        change = False
+        new = False
+        message = 'User already exist in database'
+        user = {
+                'id': user.id,
+                'mail': user.email,
+                'timeStamp': user.timestamp,
+                'subscribed': user.subscription
+        }
+    return {
+        'status': status,
+        'change': change,
+        'new': new,
+        'message': message,
+        'user': user
+    }
+    
 def change_subscription(data):
     """
     Input:
@@ -69,21 +75,20 @@ def change_subscription(data):
         update_this.timestamp =datetime.now()
         db.session.commit()
         # app.logger.warning('%s : Subscription Changed', data['email'])
-        response_object = {
-            'change': 'true',
-            'new': 'false',
-            'details': {
-                'message': 'subscription changed'
-            }
-        }
-        return response_object, 200
+        status = 200
+        change = True
+        message = 'Subscription changed'
+        email = update_this.email
     else:
         # app.logger.warning('%s : User not exist', data['email'])
-        response_object = {
-            'change': False,
-            'new': False,
-            'details': {
-                'message': 'User not exist'
-            }
-        }
-        return response_object, 404
+        status = 404
+        change = True
+        message = 'User not exist'
+        email = data['email']
+
+    return {
+        'status': status,
+        'change': change,
+        'message': message,
+        'email': email
+    }
