@@ -1,4 +1,4 @@
-from flask import request
+from flask import request, jsonify
 from flask_restplus import Resource
 
 from app.main.util.dto import UserDto
@@ -15,8 +15,10 @@ class InserUser(Resource):
     def post(self):
         """Creates a new User """
         data = request.json
+        x = subscribe_user(data=data)
+        print(x)
+        return x
         
-        return subscribe_user(data=data)
 
 @api.route('/subscription')
 class UpdateUser(Resource):
@@ -25,5 +27,7 @@ class UpdateUser(Resource):
     def put(self):
         """Creates a new User """
         data = request.json
+        x = change_subscription(data=data)
+        print(x)
         return change_subscription(data=data)
 

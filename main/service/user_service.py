@@ -1,6 +1,7 @@
 from datetime import datetime
 from app.main import db
 from app.main.model.user import Subscription
+from flask import jsonify
 
 
 def subscribe_user(data):
@@ -18,13 +19,14 @@ def subscribe_user(data):
             3. return info of email if exist in Database
     """
     user = Subscription.query.filter_by(email=data['email']).first()
-    print(user)
+    print("asdas",user)
     if not user:
         user = Subscription(data['email'])
         db.session.add(user)
         db.session.commit()
         # app.logger.info('%s : successfully subscribed', user.email)
         response_object = {
+            'state': "201",
             'change': 'true',
             'new': 'true',
             'details': {
@@ -34,8 +36,7 @@ def subscribe_user(data):
         return response_object, 201
     else:
         # app.logger.info('%s : User already exist', user.email)
-        response_object = {
-            'user': {
+        return { 'user': {
                 'id': user.id,
                 'mail': user.email,
                 'timeStamp': user.timestamp,
@@ -44,8 +45,7 @@ def subscribe_user(data):
             'status': 409,
             'change': False,
             'new': False,
-        }
-        return response_object, 409
+        }, 409 
 
 
 def change_subscription(data):
