@@ -1,7 +1,6 @@
-import datetime
-
+from datetime import datetime
 from app.main import db
-from app.main.model.user import User
+from app.main.model.user import Subscription
 
 
 def subscribe_user(data):
@@ -18,13 +17,13 @@ def subscribe_user(data):
             2. Add email in Database if not exist
             3. return info of email if exist in Database
     """
-    data = request.get_json()
     user = Subscription.query.filter_by(email=data['email']).first()
+    print(user)
     if not user:
         user = Subscription(data['email'])
         db.session.add(user)
         db.session.commit()
-        fapp.logger.info('%s : successfully subscribed', user.email)
+        # app.logger.info('%s : successfully subscribed', user.email)
         response_object = {
             'change': 'true',
             'new': 'true',
@@ -34,7 +33,7 @@ def subscribe_user(data):
         }
         return response_object, 201
     else:
-        fapp.logger.info('%s : User already exist', user.email)
+        # app.logger.info('%s : User already exist', user.email)
         response_object = {
             'user': {
                 'id': user.id,
@@ -67,9 +66,9 @@ def change_subscription(data):
     update_this = Subscription.query.filter_by(email=data['email']).first()
     if update_this:
         update_this.subscription = not update_this.subscription
-        update_this.timestamp = dt.now()
+        update_this.timestamp =datetime.now()
         db.session.commit()
-        fapp.logger.warning('%s : Subscription Changed', data['email'])
+        # app.logger.warning('%s : Subscription Changed', data['email'])
         response_object = {
             'change': 'true',
             'new': 'false',
@@ -79,10 +78,10 @@ def change_subscription(data):
         }
         return response_object, 200
     else:
-        fapp.logger.warning('%s : User not exist', data['email'])
+        # app.logger.warning('%s : User not exist', data['email'])
         response_object = {
             'change': False,
-            'new': None,
+            'new': False,
             'details': {
                 'message': 'User not exist'
             }

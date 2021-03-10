@@ -8,17 +8,18 @@ api = UserDto.api
 _user = UserDto.user
 
 
-@api.route('/api/subscription')
-class insert_user(Resource):
+@api.route('/subscription')
+class InserUser(Resource):
     @api.doc("Insert User")
     @api.marshal_with(_user, envelope='data')
     def post(self):
         """Creates a new User """
         data = request.json
+        
         return subscribe_user(data=data)
 
-@api.route('/api/subscription')
-class update_user(Resource):
+@api.route('/subscription')
+class UpdateUser(Resource):
     @api.doc("Update User")
     @api.marshal_with(_user, envelope='data')
     def put(self):

@@ -20,7 +20,7 @@ class DevelopmentConfig(Config):
     DEBUG = True
     ENV = 'development'
     DATABASE_USER = 'postgres'
-    DATABASE_NAME = 'mydb2'
+    DATABASE_NAME = 'sub'
     DATABASE_PASSWORD = '3366'
     DATABASE_URI = '127.0.0.1'
     DATABASE_PORT = 5432
@@ -32,7 +32,6 @@ class DevelopmentConfig(Config):
     TESTING = True
 
 
-
 class TestingConfig(Config):
     """
     Development Configuration
@@ -41,7 +40,7 @@ class TestingConfig(Config):
     DEBUG = True
     ENV = 'development'
     DATABASE_USER = 'postgres'
-    DATABASE_NAME = 'mydb2'
+    DATABASE_NAME = 'sub'
     DATABASE_PASSWORD = '3366'
     DATABASE_URI = '127.0.0.1'
     DATABASE_PORT = 5432

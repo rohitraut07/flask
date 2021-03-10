@@ -1,18 +1,14 @@
 from .. import db, flask_bcrypt
-from datetime import datetime as dt
+from datetime import datetime
 
-class User(db.Model):
+class Subscription(db.Model):
     """ User Model for storing user related details """
 
-    __tablename__ = "Subscription"
+    __tablename__ = "subscribers"
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     email = db.Column(db.String(120), unique=True)
     subscription = db.Column(db.Boolean, unique=False, default=True)
-    timestamp = db.Column(db.DateTime, default=dt.now())
+    timestamp = db.Column(db.DateTime, default=datetime.now())
     
-    def __init__(self, email, ):
+    def __init__(self,email):
         self.email = email
-        self.subscription = True
-
-    def __repr__(self):
-        return "<subscriber '{}'>".format(self.username)
